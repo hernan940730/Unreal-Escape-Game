@@ -22,19 +22,27 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
-    
     // Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
     
 private:
-    UPROPERTY(VisibleAnywhere)
-    float OpenAngle = 90.0f;
-    
     UPROPERTY(EditAnywhere)
     ATriggerVolume* PressurePlate;
     
+    UPROPERTY(EditAnywhere)
+    float OpenAngle = -90.0f;
+    
+    UPROPERTY(EditAnywhere)
+    float DoorCloseDelay = 1.f;
+    
     AActor* ActorThatOpens;
+    AActor* Owner;
+    float LastDoorOpenTime;
+    
     
     void OpenDoor();
+    void CloseDoor();
+    bool ShouldOpenDoor();
+    bool ShouldCloseDoor();
     void OpenDoorTrigger();
 };
