@@ -4,7 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "PhysicsEngine/PhysicsHandleComponent.h"
+#include "Components/InputComponent.h"
 #include "Grabber.generated.h"
+
+
+struct LineTrace;
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -28,5 +33,22 @@ private:
     
     UPROPERTY(EditAnywhere)
     float Reach = 100.f;
-		
+    
+    UPhysicsHandleComponent* PhysicsHandle = nullptr;
+    UInputComponent* Input = nullptr;
+    
+    void FindPhysicsHandleComponent();
+    void SetupInputComponent();
+    void Grab();
+    void Release();
+    const FHitResult GetFirstPhysicsBodyInReach();
+    const LineTrace GetPlayerViewPointLineTrace();
+    const FHitResult GetFirstPhysicsBodyInLineTrace(const LineTrace& MyLineTrace);
+    void UpdateGrabComponentLocation();
+};
+
+
+struct LineTrace {
+    FVector Begin;
+    FVector End;
 };
