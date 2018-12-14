@@ -47,6 +47,9 @@ void UGrabber::SetupInputComponent() {
 }
 
 void UGrabber::Grab() {
+    if (!PhysicsHandle) {
+        return;
+    }
     FHitResult Hit = GetFirstPhysicsBodyInReach();
     UPrimitiveComponent* HitComponent = Hit.GetComponent();
     if (HitComponent) {
@@ -55,6 +58,9 @@ void UGrabber::Grab() {
 }
 
 void UGrabber::Release() {
+    if (!PhysicsHandle) {
+        return;
+    }
     PhysicsHandle->ReleaseComponent();
 }
 
@@ -85,6 +91,9 @@ const FHitResult UGrabber::GetFirstPhysicsBodyInLineTrace(const LineTrace& MyLin
 }
 
 void UGrabber::UpdateGrabComponentLocation() {
+    if (!PhysicsHandle) {
+        return;
+    }
     if (PhysicsHandle->GetGrabbedComponent()) {
         PhysicsHandle->SetTargetLocation(GetPlayerViewLineTrace().End);
     }
