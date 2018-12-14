@@ -31,19 +31,35 @@ public:
 
 private:
     
+    /// Distance in Centimeters of Reach to grab an object
     UPROPERTY(EditAnywhere)
     float Reach = 100.f;
     
     UPhysicsHandleComponent* PhysicsHandle = nullptr;
     UInputComponent* Input = nullptr;
     
+    /// Get physics handle component of player
     void FindPhysicsHandleComponent();
+    
+    /// Setup functions asociated with grab keys
     void SetupInputComponent();
+    
+    /// Grab an object
     void Grab();
+    
+    /// Release an object
     void Release();
+    
+    /// Get Hit Result of physics Body in reach
     const FHitResult GetFirstPhysicsBodyInReach();
-    const LineTrace GetPlayerViewPointLineTrace();
+    
+    /// Get Line Trace of Player view
+    const LineTrace GetPlayerViewLineTrace();
+    
+    /// Get Hit Result of physics body in a line trace
     const FHitResult GetFirstPhysicsBodyInLineTrace(const LineTrace& MyLineTrace);
+    
+    /// Update position of component that is grabbed (if one)
     void UpdateGrabComponentLocation();
 };
 

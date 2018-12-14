@@ -35,7 +35,9 @@ private:
     UPROPERTY(EditAnywhere)
     float DoorCloseDelay = 1.f;
     
-    AActor* ActorThatOpens;
+    UPROPERTY(EditAnywhere)
+    float TriggerWeight = 50.f;
+    
     AActor* Owner;
     float LastDoorOpenTime;
     
@@ -45,4 +47,6 @@ private:
     bool ShouldOpenDoor();
     bool ShouldCloseDoor();
     void OpenDoorTrigger();
+    float GetTotalMassOfActorsOnPlate();
+    float GetTotalMassInComponentsArray(const TArray<UPrimitiveComponent*>& Components);
 };

@@ -2,6 +2,9 @@
 
 #include "OpenDoor.h"
 
+#define OUT
+
+
 // Sets default values for this component's properties
 UOpenDoor::UOpenDoor()
 {
@@ -17,7 +20,6 @@ UOpenDoor::UOpenDoor()
 void UOpenDoor::BeginPlay()
 {
 	Super::BeginPlay();
-    ActorThatOpens = GetWorld()->GetFirstPlayerController()->GetPawn();
     Owner = GetOwner();
 }
 
@@ -51,9 +53,23 @@ void UOpenDoor::OpenDoorTrigger() {
 }
 
 bool UOpenDoor::ShouldOpenDoor() {
-    return PressurePlate->IsOverlappingActor(ActorThatOpens);
+    return GetTotalMassOfActorsOnPlate() >= TriggerWeight;
 }
 
 bool UOpenDoor::ShouldCloseDoor() {
     return GetWorld()->GetTimeSeconds() - LastDoorOpenTime >= DoorCloseDelay;
+}
+
+float UOpenDoor::GetTotalMassOfActorsOnPlate() {
+    TArray<UPrimitiveComponent*> OverlappingComponents;
+    PressurePlate->GetOverlappingComponents(OUT OverlappingComponents);
+    return GetTotalMassInComponentsArray(OverlappingComponents);
+}
+
+float UOpenDoor::GetTotalMassInComponentsArray(const TArray<UPrimitiveComponent*>& Components) {
+    float TotalMass = 0.f;
+    for (UPrimitiveComponent* component : Components) {
+        TotalMass += component->GetMass();
+    }
+    return TotalMass;
 }

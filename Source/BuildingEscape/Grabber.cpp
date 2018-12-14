@@ -59,11 +59,11 @@ void UGrabber::Release() {
 }
 
 const FHitResult UGrabber::GetFirstPhysicsBodyInReach() {
-    LineTrace PlayerViewPointLineTrace = GetPlayerViewPointLineTrace();
+    LineTrace PlayerViewPointLineTrace = GetPlayerViewLineTrace();
     return GetFirstPhysicsBodyInLineTrace(PlayerViewPointLineTrace);
 }
 
-const LineTrace UGrabber::GetPlayerViewPointLineTrace() {
+const LineTrace UGrabber::GetPlayerViewLineTrace() {
     LineTrace PlayerViewPointLineTrace;
     FVector PlayerViewPointLocation;
     FRotator PlayerViewPointRotation;
@@ -86,6 +86,6 @@ const FHitResult UGrabber::GetFirstPhysicsBodyInLineTrace(const LineTrace& MyLin
 
 void UGrabber::UpdateGrabComponentLocation() {
     if (PhysicsHandle->GetGrabbedComponent()) {
-        PhysicsHandle->SetTargetLocation(GetPlayerViewPointLineTrace().End);
+        PhysicsHandle->SetTargetLocation(GetPlayerViewLineTrace().End);
     }
 }
